@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,18 +44,17 @@ public class PartyController {
   @PostMapping("/addMembers")
   @ResponseBody
   public Party addMembersToParty(@RequestBody AddMembersToPartyDto addMembersToPartyDto) {
-   return partyService.addMembersToParty(addMembersToPartyDto.getMemberEmails(),
-       addMembersToPartyDto.getPartyName());
+    return partyService.addMembersToParty(addMembersToPartyDto.getMemberEmails(),
+        addMembersToPartyDto.getPartyName());
   }
 
   @PostMapping("/assignMembers")
   @ResponseBody
   public ResponseEntity<?> assignMembers(@RequestParam String partyName) {
-    try{
+    try {
       return ResponseEntity.ok(partyService.assignMembers(partyName));
-    }
-    catch (IllegalArgumentException e){
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
   }

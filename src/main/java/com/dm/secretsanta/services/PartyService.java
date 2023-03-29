@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,21 +54,34 @@ public class PartyService {
   public Party assignMembers(String partyName) {
     var partyToAssign = getPartyByName(partyName);
     var membersList = new ArrayList<>(partyToAssign.getUserSet());
-    var memberAssignedToMemberMap = partyToAssign.getAssignedUsers();
 
     if (membersList.size() >= 2) {
-      Collections.shuffle(membersList);
-      int currentIndex;
-      for (var member : membersList) {
-        currentIndex = membersList.indexOf(member);
-        if (currentIndex + 1 <= membersList.size()) {
-          memberAssignedToMemberMap.put(member, membersList.get(currentIndex + 1));
-          continue;
-        }
-        memberAssignedToMemberMap.put(member, membersList.get(0));
-      }
-      return partyToAssign;
+      return getMappedMembers(partyToAssign, membersList);
     }
-   throw new IllegalArgumentException("Party must have at least 2 members");
+    throw new IllegalArgumentException("Party must have at least 2 members");
+  }
+
+  @Transactional
+  private Party getMappedMembers(Party partyToAssign, ArrayList<Member> membersList) {
+    var memberAssignedToMemberMap = partyToAssign.getAssignedUsers();
+    shuffleMembersAndAssignToNextOne(membersList, memberAssignedToMemberMap);
+    return partyToAssign;
+  }
+
+  @Transactional
+  private void shuffleMembersAndAssignToNextOne(ArrayList<Member> membersList,
+      Map<Member, Member> memberAssignedToMemberMap) {
+    Collections.shuffle(membersList);
+
+    int currentIndex;
+    for (var member : membersList) {
+      currentIndex = membersList.indexOf(member);
+      if (currentIndex + 1 < membersList.size()) {
+        memberAssignedToMemberMap.put(member, membersList.get(currentIndex + 1));
+        continue;
+      }
+      memberAssignedToMemberMap.put(member, membersList.get(0));
+      break;
+    }
   }
 }

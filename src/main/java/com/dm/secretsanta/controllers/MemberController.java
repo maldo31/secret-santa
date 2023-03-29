@@ -35,7 +35,7 @@ public class MemberController {
   @PostMapping()
   @ResponseBody
   public Member addMember(@RequestBody CreateMemberDto createMemberDto) {
-    var member = modelMapper.map(createMemberDto,Member.class);
+    var member = modelMapper.map(createMemberDto, Member.class);
     return memberService.addMember(member);
   }
 

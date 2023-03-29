@@ -15,11 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Member {
+
   @Id
   @GeneratedValue
   private int id;
   private String firstname;
   private String lastname;
-  @Column(unique=true)
+  @Column(unique = true)
   private String email;
 }

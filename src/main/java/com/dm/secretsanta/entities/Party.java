@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import java.util.Map;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -19,16 +18,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Party {
+
   @Id
   @GeneratedValue
   private int id;
-  @Column(unique=true)
+  @Column(unique = true)
   private String name;
   @ManyToMany
   private Set<Member> userSet;
   @ManyToMany
-  private Map<Member,Member> assignedUsers;
-
+  private Map<Member, Member> assignedUsers;
 
 
 }

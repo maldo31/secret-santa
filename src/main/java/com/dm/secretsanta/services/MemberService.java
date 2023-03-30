@@ -1,6 +1,7 @@
 package com.dm.secretsanta.services;
 
 import com.dm.secretsanta.entities.Member;
+import com.dm.secretsanta.entities.WishListContainer;
 import com.dm.secretsanta.repositories.MemberRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ public class MemberService {
   public Member getByEmail(String email) {
     return memberRepository.findByEmailIgnoreCase(email);
   }
-
 
   public List<Member> getAllMembers() {
     return memberRepository.findAll();

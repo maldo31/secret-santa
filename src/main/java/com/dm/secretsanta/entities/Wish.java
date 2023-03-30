@@ -1,10 +1,9 @@
 package com.dm.secretsanta.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Wish {
 
   @Id
   @GeneratedValue
   private int id;
-  private String firstname;
-  private String lastname;
-  @Column(unique = true)
-  private String email;
-  @OneToOne
-  private WishListContainer wishListContainer;
+  private String name;
+  private String desc;
+  private BigDecimal price;
+  private String link;
+  private boolean isTaken;
+
+
 }

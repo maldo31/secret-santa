@@ -8,8 +8,10 @@ import com.dm.secretsanta.entities.Wish;
 import com.dm.secretsanta.entities.WishListContainer;
 import com.dm.secretsanta.repositories.WishRepository;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,6 +74,8 @@ class WishListContainerServiceTest {
 
   @Test
   void getWishesInPriceRangeShouldReturnWishListInGivenPriceRange() {
+
+
     //Given
     given(memberService.getByEmail(testData.email())).willReturn(testData.member);
     given(testData.member.getWishListContainer()).willReturn(testData.wishListContainer());
@@ -79,7 +83,7 @@ class WishListContainerServiceTest {
     var upperBoundary = new BigDecimal("20.00");
 
     //When
-    var filteredWishList = wishListContainerService.getWishesInPriceRange(testData.email(),
+    var filteredWishList = wishListContainerService.getWishesInRangeForMember(testData.email(),
         lowerBoundary, upperBoundary);
 
     //Then
